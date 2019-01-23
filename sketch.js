@@ -1,4 +1,5 @@
 var gameParams = new GameParams();
+var distanceMetrics = new DistanceMetrics();
 
 var popPara;
 var mrPara;

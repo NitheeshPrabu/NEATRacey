@@ -30,7 +30,7 @@ class Dot {
 	//moves the dot
 	move() {
 		for (var i = 0; i < this.bouncers.length; i++) {
-			if (this.bounceTimer < 0 && dist(this.position.x, this.position.y, this.bouncers[i].pixelPos.x + gameParams.tileSize / 2, this.bouncers[i].pixelPos.y + gameParams.tileSize / 2) < this.speed) {//if reached bouncer
+			if (this.bounceTimer < 0 && distanceMetrics.getDistance(this.position.x, this.position.y, this.bouncers[i].pixelPos.x + gameParams.tileSize / 2, this.bouncers[i].pixelPos.y + gameParams.tileSize / 2, gameParams.distanceParam) < this.speed) {//if reached bouncer
 				if (this.rotates) {
 					this.bounceTimer = 5;
 					this.turnDotRight();
@@ -87,7 +87,7 @@ class Dot {
 		var playerSize = bottomRight.x - topLeft.x;
 		if ((ptl.x < bottomRight.x && pbr.x > topLeft.x) && (ptl.y < bottomRight.y && pbr.y > topLeft.y)) {
 
-			if (dist(this.position.x, this.position.y, (ptl.x + pbr.x) / 2.0, (ptl.y + pbr.y) / 2.0) < this.diameter / 2 + sqrt(playerSize * playerSize * 2) / 2) {
+			if (distanceMetrics.getDistance(this.position.x, this.position.y, (ptl.x + pbr.x) / 2.0, (ptl.y + pbr.y) / 2.0, gameParams.distanceParam) < this.diameter / 2 + sqrt(playerSize * playerSize * 2) / 2) {
 				return true;
 			}
 		}
@@ -120,6 +120,6 @@ class Dot {
 	//------------------------------------------------------------------------------------------------------------
 	//returns true if the Pvectors define a square which collides with this dot
 	getDistance(ptl, pbr) { //player dimensions
-		return dist(this.position.x, this.position.y, (ptl.x + pbr.x) / 2.0, (ptl.y + pbr.y) / 2.0)
+		return distanceMetrics.getDistance(this.position.x, this.position.y, (ptl.x + pbr.x) / 2.0, (ptl.y + pbr.y) / 2.0, gameParams.distanceParam)
 	}
 }

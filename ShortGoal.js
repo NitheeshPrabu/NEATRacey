@@ -34,6 +34,6 @@ class ShortGoal { //used to define short term goals for the players
 	//------------------------------------------------------------------------------------------------------------------------------
 	//set the distance to finish by adding the distance to the finish for the node n plus the distance from this node to node n
 	setDistanceToFinish(n) {
-		this.distToFinish = n.distToFinish + dist(this.pos.x, this.pos.y, n.pos.x, n.pos.y);
+		this.distToFinish = n.distToFinish + distanceMetrics.getDistance(this.pos.x, this.pos.y, n.pos.x, n.pos.y, gameParams.distanceParam);
 	}
 }

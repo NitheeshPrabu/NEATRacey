@@ -69,5 +69,7 @@ class GameParams {
         this.cxm;
         this.cym;
         this.hasCoin;
+
+        this.distanceParam = 2;
     }
 }

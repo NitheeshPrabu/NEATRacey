@@ -122,7 +122,7 @@ class Player {
 			for (var i = this.shortGoals.length - 1; i >= 0; i--) {
 				if (!this.shortGoals[i].reached) {
 					estimatedDistance = this.shortGoals[i].distToFinish;
-					estimatedDistance += dist(this.pos.x, this.pos.y, this.shortGoals[i].pos.x, this.shortGoals[i].pos.y);
+					estimatedDistance += distanceMetrics.getDistance(this.pos.x, this.pos.y, this.shortGoals[i].pos.x, this.shortGoals[i].pos.y, gameParams.distanceParam);
 				}
 			}
 			if (this.deathByDot) {
