@@ -29,4 +29,10 @@ class Coin {
 		}
 		return;
 	}
+
+	//------------------------------------------------------------------------------------------------------------
+	//returns true if the Pvectors define a square which collides with this dot
+	getDistance(ptl, pbr) { //player dimensions
+		return distanceMetrics.getDistance(this.pos.x, this.pos.y, (ptl.x + pbr.x) / 2.0, (ptl.y + pbr.y) / 2.0, gameParams.distanceParam)
+	}
 }

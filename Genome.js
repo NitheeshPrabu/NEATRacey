@@ -444,7 +444,6 @@ class Genome {
 	//----------------------------------------------------------------------------------------------------------------------------------------
 	//draw the genome on the screen
 	drawGenome(startX, startY, w, h) {
-		//i know its ugly but it works (and is not that important) so I'm not going to mess with it
 		var allNodes = [];
 		var nodePoses = [];
 		var nodeNumbers = [];
@@ -488,6 +487,8 @@ class Genome {
 			} else {
 				stroke(0, 0, 255);
 			}
+
+			//convert weight of the connection from range [0,1] to [0,5] to get thicker lines
 			strokeWeight(map(abs(this.genes[i].weight), 0, 1, 0, 5));
 			line(from.x, from.y, to.x, to.y);
 		}

@@ -198,7 +198,7 @@ function drawGameDetails() {
 		}
 	} else {
 		text("Use the arrow keys or WASD to move.", 640, 90);
-		text("Avoid dots. Collect coins. Reach the Goal.", 640, 130);
+		text("Avoid dots. Collect the coin. Reach the Goal.", 640, 130);
 	}
 }
 
