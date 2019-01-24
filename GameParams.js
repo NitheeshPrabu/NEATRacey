@@ -70,6 +70,6 @@ class GameParams {
         this.cym;
         this.hasCoin;
 
-        this.distanceParam = 2;
+        this.distanceParam = 1;
     }
 }

@@ -23,7 +23,7 @@ class Player {
 		if (gameParams.hasCoin)
 			this.coin = new Coin(gameParams.cxm * gameParams.tileSize + gameParams.xoff, gameParams.cym * gameParams.tileSize + gameParams.yoff);
 
-		this.genomeInputs = gameParams.dots.length;
+		this.genomeInputs = gameParams.dots.length + gameParams.solids.length;
 		if (gameParams.hasCoin)
 			this.genomeInputs++;
 		this.genomeOutputs = 2;
@@ -156,12 +156,12 @@ class Player {
 			for (var i = 0; i < gameParams.dots.length; i++) {
 				this.vision[i] = gameParams.dots[i].getDistance(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size));
 			}
-			// var temp = createVector(this.vel.x, this.vel.y);
-			// temp.normalize();
-			// temp.mult(this.playerSpeed);
-			// for (var i = gameParams.dots.length; i < gameParams.dots.length + gameParams.solids.length; i++) {
-			// 	this.vision[i] = gameParams.solids[i - gameParams.dots.length].getDistance(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size), temp);
-			// }
+			var temp = createVector(this.vel.x, this.vel.y);
+			temp.normalize();
+			temp.mult(this.playerSpeed);
+			for (var i = gameParams.dots.length; i < gameParams.dots.length + gameParams.solids.length; i++) {
+				this.vision[i] = gameParams.solids[i - gameParams.dots.length].getDistance(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size), temp);
+			}
 			if (gameParams.hasCoin)
 				this.vision[this.genomeInputs-1] = this.coin.getDistance(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size))
 		}

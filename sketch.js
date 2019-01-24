@@ -17,7 +17,7 @@ function setup() {
 			gameParams.tiles[i][j] = new Tile(i, j);
 		}
 	}
-	
+
 	//load level objects
 	setLevelWalls();
 	setLevelGoal();
@@ -28,7 +28,7 @@ function setup() {
 
 	gameParams.p = new Player();
 	gameParams.testPopulation = new Population(gameParams.populationSize);
-	
+
 	//prevents the window from moving from the arrow keys or the spacebar
 	window.addEventListener("keydown", function (e) {
 		// space and arrow keys
@@ -74,7 +74,7 @@ function draw() {
 				} else { //if there are more generations to show
 					//set gen player as the best player of that generation
 					gameParams.genPlayer = gameParams.testPopulation.genPlayers[gameParams.upToGenPos].getChild();
-					
+
 					//reset the dots positions
 					resetDots();
 				}
@@ -91,7 +91,7 @@ function draw() {
 				gameParams.testPopulation.calculateFitness();
 				gameParams.testPopulation.naturalSelection();
 				gameParams.testPopulation.mutateOffspring();
-				
+
 				//reset dots
 				resetDots();
 
