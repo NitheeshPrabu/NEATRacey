@@ -2,8 +2,10 @@ class Dot {
 
 	//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	//constructor
-	constructor(t, velX, velY, rotates, startingTile) {
+	constructor(t, velX, velY, rotates, startingTile, respawn) {
 		this.rotates = rotates;
+		this.respawn = respawn;
+		this.bounced = 0;
 		if (this.rotates) {
 			this.position = createVector(startingTile.pixelPos.x + gameParams.tileSize/2, startingTile.pixelPos.y + gameParams.tileSize/2);
 			this.startingPos = createVector(startingTile.pixelPos.x + gameParams.tileSize/2, startingTile.pixelPos.y + gameParams.tileSize/2);
@@ -30,14 +32,14 @@ class Dot {
 	//moves the dot
 	move() {
 		for (var i = 0; i < this.bouncers.length; i++) {
-			if (this.bounceTimer < 0 && distanceMetrics.getDistance(this.position.x, this.position.y, this.bouncers[i].pixelPos.x + gameParams.tileSize / 2, this.bouncers[i].pixelPos.y + gameParams.tileSize / 2, gameParams.distanceParam) < this.speed) {//if reached bouncer
+			if (this.bounceTimer < 0 && dist(this.position.x, this.position.y, this.bouncers[i].pixelPos.x + gameParams.tileSize / 2, this.bouncers[i].pixelPos.y + gameParams.tileSize / 2) < this.speed) {//if reached bouncer
 				if (this.rotates) {
 					this.bounceTimer = 5;
 					this.turnDotRight();
 					break;
 				} else {
 					this.bounceTimer = 10;
-					this.bounceWait = 1;//wait 1 frames then change direction
+					this.bounceWait = 1; //wait 1 frames then change direction
 				}
 			}
 		}
@@ -50,7 +52,6 @@ class Dot {
 
 			}
 		}
-
 		this.position.add(this.velocity);//move dot
 		this.bounceTimer--;
 		this.bounceWait--;
@@ -66,7 +67,10 @@ class Dot {
 		} else if (this.velocity.x == 0 && this.velocity.y < 0) {
 			this.velocity = createVector(1.0 * this.speed, 0);
 		}
-
+		this.bounced++;
+		if (this.respawn && this.bounced == this.bouncers.length) {
+			this.resetDot();
+		}
 	}
 
 	//------------------------------------------------------------------------------------------------------------
@@ -87,7 +91,7 @@ class Dot {
 		var playerSize = bottomRight.x - topLeft.x;
 		if ((ptl.x < bottomRight.x && pbr.x > topLeft.x) && (ptl.y < bottomRight.y && pbr.y > topLeft.y)) {
 
-			if (distanceMetrics.getDistance(this.position.x, this.position.y, (ptl.x + pbr.x) / 2.0, (ptl.y + pbr.y) / 2.0, gameParams.distanceParam) < this.diameter / 2 + sqrt(playerSize * playerSize * 2) / 2) {
+			if (dist(this.position.x, this.position.y, (ptl.x + pbr.x) / 2.0, (ptl.y + pbr.y) / 2.0) < this.diameter / 2 + sqrt(playerSize * playerSize * 2) / 2) {
 				return true;
 			}
 		}
@@ -97,6 +101,7 @@ class Dot {
 	//------------------------------------------------------------------------------------------------------------
 	//returns the dot to its starting state
 	resetDot() {
+		this.bounced = 0;
 		this.position = this.startingPos.copy();
 		this.velocity = this.startingVel.copy();
 		if (this.rotates)

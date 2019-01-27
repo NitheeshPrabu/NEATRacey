@@ -9,11 +9,10 @@ class Coin {
 	}
 
 	show() {
-		if (!gameParams.showedCoin && !this.taken) {
+		if (!gameParams.showedCoins && !this.taken) {
 			stroke(0);
 			fill(255, 255, 0);
 			ellipse(this.pos.x, this.pos.y, this.diameter);
-			gameParams.showedCoin = true;
 		}
 	}
 

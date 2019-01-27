@@ -1,7 +1,7 @@
 //functions which set the level
 gameParams.pxm = 3;
 gameParams.pym = 4;
-gameParams.hasCoin = false;
+gameParams.hasCoins = false;
 
 function setLevelWalls() {
 	gameParams.tiles[0][0].wall = true;
@@ -165,9 +165,20 @@ function setLevelGoal() {
 	gameParams.tiles[19][5].goal = true;
 	gameParams.tiles[19][6].goal = true;
 	gameParams.tiles[19][7].goal = true;
-
 	
 	gameParams.winArea = new Solid(gameParams.tiles[17][2], gameParams.tiles[19][7]);
+}
+
+function setLevelShortGoals(coins) {
+	var shortGoals = [];
+	shortGoals[0] = new ShortGoal(gameParams.tiles[6][7], true, false);
+	shortGoals[1] = new ShortGoal(gameParams.tiles[17][2], true, false);
+	shortGoals[0].setDistanceToFinish(shortGoals[1]);
+	return shortGoals;
+}
+
+function setLevelCoins() {
+	return [];
 }
 
 function setLevelSafeArea() {
@@ -213,10 +224,10 @@ function setLevelEdges() {
 }
 
 function setLevelDots() {
-	gameParams.dots.push(new Dot([gameParams.tiles[6][3], gameParams.tiles[15][3]], 1, 0, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[6][5], gameParams.tiles[15][5]], 1, 0, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[15][4], gameParams.tiles[6][4]], -1, 0, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[15][6], gameParams.tiles[6][6]], -1, 0, false, null));
+	gameParams.dots.push(new Dot([gameParams.tiles[6][3], gameParams.tiles[15][3]], 1, 0, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[6][5], gameParams.tiles[15][5]], 1, 0, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[15][4], gameParams.tiles[6][4]], -1, 0, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[15][6], gameParams.tiles[6][6]], -1, 0, false, null, false));
 }
 
 function setLevelSolids() {

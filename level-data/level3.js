@@ -1,9 +1,7 @@
 //functions which set the level
 gameParams.pxm = 11;
 gameParams.pym = 5;
-gameParams.hasCoin = true;
-gameParams.cxm = 9.5;
-gameParams.cym = 2.5;
+gameParams.hasCoins = true;
 
 function setLevelWalls() {
 	gameParams.tiles[0][0].wall = true;
@@ -217,8 +215,21 @@ function setLevelGoal() {
 	gameParams.tiles[11][4].goal = true;
 	gameParams.tiles[11][5].goal = true;
 
-
 	gameParams.winArea = new Solid(gameParams.tiles[10][4], gameParams.tiles[11][5]);
+}
+
+function setLevelShortGoals(coins) {
+	var shortGoals = [];
+	shortGoals[1] = new ShortGoal(gameParams.tiles[11][5], true, false);
+	shortGoals[0] = new ShortGoal(coins[0], false, true);
+	shortGoals[0].setDistanceToFinish(shortGoals[1]);
+	return shortGoals;
+}
+
+function setLevelCoins() {
+	var coins = [];
+	coins.push(new Coin(9.5 * gameParams.tileSize + gameParams.xoff, 2.5 * gameParams.tileSize + gameParams.yoff));
+	return coins;
 }
 
 function setLevelSafeArea() {
@@ -247,19 +258,19 @@ function setLevelEdges() {
 }
 
 function setLevelDots() {
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], -1, 0, true, gameParams.tiles[11][6]));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], -1, 0, true, gameParams.tiles[10][6]));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], -1, 0, true, gameParams.tiles[9][6]));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, -1, true, gameParams.tiles[9][5]));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, -1, true, gameParams.tiles[9][4]));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], -1, 0, true, gameParams.tiles[11][6], false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], -1, 0, true, gameParams.tiles[10][6], false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], -1, 0, true, gameParams.tiles[9][6], false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, -1, true, gameParams.tiles[9][5], false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, -1, true, gameParams.tiles[9][4], false));
 
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, -1, true, gameParams.tiles[9][3]));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 1, 0, true, gameParams.tiles[10][3]));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 1, 0, true, gameParams.tiles[11][3]));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 1, 0, true, gameParams.tiles[12][3]));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, -1, true, gameParams.tiles[9][3], false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 1, 0, true, gameParams.tiles[10][3], false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 1, 0, true, gameParams.tiles[11][3], false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 1, 0, true, gameParams.tiles[12][3], false));
 
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, 1, true, gameParams.tiles[12][4]));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, 1, true, gameParams.tiles[12][5]));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, 1, true, gameParams.tiles[12][4], false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][3], gameParams.tiles[12][3], gameParams.tiles[12][6], gameParams.tiles[9][6]], 0, 1, true, gameParams.tiles[12][5], false));
 
 }
 

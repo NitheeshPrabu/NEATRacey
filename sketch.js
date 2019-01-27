@@ -39,10 +39,14 @@ function setup() {
 }
 
 function draw() {
-	gameParams.showedCoin = false;
+	gameParams.showedCoins = false;
 
 	background(180, 181, 254);
-	drawTiles();
+
+	if (!gameParams.showNothing) {
+		drawTiles();
+	}
+
 	drawGameDetails();
 
 	if (gameParams.humanPlaying) { //if the user is controlling the square
@@ -58,7 +62,8 @@ function draw() {
 			//update the dots and the players and show them to the screen
 			moveAndShowDots();
 			gameParams.p.update();
-			gameParams.p.show();
+			if (!gameParams.showNothing)
+				gameParams.p.show();
 		}
 	} else {
 		if (gameParams.replayGens) { //if replaying the best generations
@@ -83,7 +88,8 @@ function draw() {
 				moveAndShowDots();
 				//move and update player
 				gameParams.genPlayer.update();
-				gameParams.genPlayer.show();
+				if (!gameParams.showNothing)
+					gameParams.genPlayer.show();
 			}
 		} else { //if training normaly
 			if (gameParams.testPopulation.allPlayersDead()) {
@@ -107,14 +113,16 @@ function draw() {
 					}
 					gameParams.testPopulation.update();
 				}
-				for (var i = 0; i < gameParams.dots.length; i++) {
-					gameParams.dots[i].show();
+				if (!gameParams.showNothing) {
+					for (var i = 0; i < gameParams.dots.length; i++) {
+						gameParams.dots[i].show();
+					}
+					gameParams.testPopulation.show();
 				}
-				gameParams.testPopulation.show();
 			}
 		}
 	}
-	if (!gameParams.humanPlaying)
+	if (!gameParams.humanPlaying && !gameParams.showNothing)
 		drawBrain();
 }
 
@@ -130,7 +138,8 @@ function drawBrain() { //show the brain of whatever genome is currently showing
 function moveAndShowDots() {
 	for (var i = 0; i < gameParams.dots.length; i++) {
 		gameParams.dots[i].move();
-		gameParams.dots[i].show();
+		if (!gameParams.showNothing)
+			gameParams.dots[i].show();
 	}
 
 }
@@ -193,9 +202,14 @@ function drawGameDetails() {
 		text("Generation: " + gameParams.testPopulation.gen, 200, 90);
 		if (gameParams.testPopulation.solutionFound) {
 			text("Wins in " + gameParams.testPopulation.minStep + " moves", 700, 90);
+			if (gameParams.simDetails.length != gameParams.testPopulation.gen)
+				gameParams.simDetails.push({ "Gen": gameParams.testPopulation.gen, "Wins": gameParams.testPopulation.minStep })
 		} else {
 			text("Number of moves: " + gameParams.testPopulation.players[0].brain.directions.length, 700, 90);
+			if (gameParams.simDetails.length != gameParams.testPopulation.gen)
+				gameParams.simDetails.push({ "Gen": gameParams.testPopulation.gen, "Steps": gameParams.testPopulation.players[0].brain.directions.length })
 		}
+
 	} else {
 		text("Use the arrow keys or WASD to move.", 640, 90);
 		text("Avoid dots. Collect the coin. Reach the Goal.", 640, 130);
@@ -251,6 +265,12 @@ function keyPressed() {
 						resetDots();
 					}
 				}
+				break;
+			case 'N': //show nothing to speed up computation
+				gameParams.showNothing = !gameParams.showNothing;
+				break;
+			case 'L': //show saved sim details
+				console.log(gameParams.simDetails)
 				break;
 		}
 	}
@@ -445,33 +465,33 @@ function plusEvery() {
 
 //--------------------------------------------------------------------------------------------------------------------------------
 //this just prints the coordinates of the tile which is clicked, usefull for level building
-// function mousePressed() {
+function mousePressed() {
 
-//   var x = floor((mouseX - gameParams.xoff )/gameParams.tileSize);
-//   var y = floor((mouseY - gameParams.yoff )/gameParams.tileSize);
+	var x = floor((mouseX - gameParams.xoff) / gameParams.tileSize);
+	var y = floor((mouseY - gameParams.yoff) / gameParams.tileSize);
 
-//   gameParams.tiles[x][y].wall = !gameParams.tiles[x][y].wall;
-//   // gameParams.tiles[x][y].safe = !gameParams.tiles[x][y].safe;
-//   // gameParams.tiles[x][y].safe = !gameParams.tiles[x][y].safe;
+	//   gameParams.tiles[x][y].wall = !gameParams.tiles[x][y].wall;
+	// gameParams.tiles[x][y].safe = !gameParams.tiles[x][y].safe;
+	// gameParams.tiles[x][y].safe = !gameParams.tiles[x][y].safe;
 
-//   //define solids
-//   // if(gameParams.firstClick){
-//   //   print("gameParams.solids.push(new Solid(gameParams.tiles[" + x + "]["+ y + "],");
-//   // }else{
-//   //   print("gameParams.tiles[" + x + "]["+ y + "]));");
-//   // }
-//   // gameParams.firstClick = !gameParams.firstClick;
+	//   define solids
+	//   if(gameParams.firstClick){
+	//     print("gameParams.solids.push(new Solid(gameParams.tiles[" + x + "]["+ y + "],");
+	//   }else{
+	//     print("gameParams.tiles[" + x + "]["+ y + "]));");
+	//   }
+	//   gameParams.firstClick = !gameParams.firstClick;
 
-//   print("gameParams.tiles[" + x + "]["+ y + "],");
+	  print("gameParams.tiles[" + x + "]["+ y + "],");
 
-//   // define dots
-//   // if(gameParams.firstClick){
-//   //   print("gameParams.dots.push(new Dot(gameParams.tiles[" + x + "]["+ y + "],");
-//   // }else{
-//   //   print("gameParams.tiles[" + x + "]["+ y + "], 0, 1));");
-//   // }
-//   //
-//   // gameParams.firstClick = !gameParams.firstClick;
-//   // gameParams.dots.push(new Dot(gameParams.tiles[15][6], gameParams.tiles[6][6], -1));
+	// define dots
+	// if(gameParams.firstClick){
+	//   print("gameParams.dots.push(new Dot(gameParams.tiles[" + x + "]["+ y + "],");
+	// }else{
+	//   print("gameParams.tiles[" + x + "]["+ y + "], 0, 1));");
+	// }
+	//
+	// gameParams.firstClick = !gameParams.firstClick;
+	// gameParams.dots.push(new Dot(gameParams.tiles[15][6], gameParams.tiles[6][6], -1));
 
-// }
+}

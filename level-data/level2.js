@@ -1,9 +1,7 @@
 //functions which set the level
 gameParams.pxm = 3;
 gameParams.pym = 4;
-gameParams.hasCoin = true;
-gameParams.cxm = 11;
-gameParams.cym = 5;
+gameParams.hasCoins = true;
 
 function setLevelWalls() {
 	gameParams.tiles[0][0].wall = true;
@@ -152,6 +150,22 @@ function setLevelGoal() {
 	gameParams.tiles[18][5].goal = true;
 	gameParams.tiles[19][4].goal = true;
 	gameParams.tiles[19][5].goal = true;
+
+	gameParams.winArea = new Solid(gameParams.tiles[17][2], gameParams.tiles[19][7]);
+}
+
+function setLevelShortGoals(coins) {
+	var shortGoals = [];
+	shortGoals[1] = new ShortGoal(gameParams.tiles[19][5], true, false);
+	shortGoals[0] = new ShortGoal(coins[0], false, true);
+	shortGoals[0].setDistanceToFinish(shortGoals[1]);
+	return shortGoals;
+}
+
+function setLevelCoins() {
+	var coins = [];
+	coins.push(new Coin(11 * gameParams.tileSize + gameParams.xoff, 5 * gameParams.tileSize + gameParams.yoff));
+	return coins;
 }
 
 function setLevelSafeArea() {
@@ -161,8 +175,6 @@ function setLevelSafeArea() {
 	gameParams.tiles[3][5].safe = true;
 	gameParams.tiles[4][4].safe = true;
 	gameParams.tiles[4][5].safe = true;
-
-	gameParams.winArea = new Solid(gameParams.tiles[17][2], gameParams.tiles[19][7]);
 }
 
 function setLevelEdges() {
@@ -187,18 +199,18 @@ function setLevelEdges() {
 }
 
 function setLevelDots() {
-	gameParams.dots.push(new Dot([gameParams.tiles[5][2], gameParams.tiles[5][7]], 0, 1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[6][7], gameParams.tiles[6][2]], 0, -1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[7][2], gameParams.tiles[7][7]], 0, 1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[8][7], gameParams.tiles[8][2]], 0, -1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[9][2], gameParams.tiles[9][7]], 0, 1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[10][7], gameParams.tiles[10][2]], 0, -1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[11][2], gameParams.tiles[11][7]], 0, 1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[12][7], gameParams.tiles[12][2]], 0, -1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[13][2], gameParams.tiles[13][7]], 0, 1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[14][7], gameParams.tiles[14][2]], 0, -1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[15][2], gameParams.tiles[15][7]], 0, 1, false, null));
-	gameParams.dots.push(new Dot([gameParams.tiles[16][7], gameParams.tiles[16][2]], 0, -1, false, null));
+	gameParams.dots.push(new Dot([gameParams.tiles[5][2], gameParams.tiles[5][7]], 0, 1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[6][7], gameParams.tiles[6][2]], 0, -1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[7][2], gameParams.tiles[7][7]], 0, 1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[8][7], gameParams.tiles[8][2]], 0, -1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[9][2], gameParams.tiles[9][7]], 0, 1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[10][7], gameParams.tiles[10][2]], 0, -1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[11][2], gameParams.tiles[11][7]], 0, 1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[12][7], gameParams.tiles[12][2]], 0, -1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[13][2], gameParams.tiles[13][7]], 0, 1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[14][7], gameParams.tiles[14][2]], 0, -1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[15][2], gameParams.tiles[15][7]], 0, 1, false, null, false));
+	gameParams.dots.push(new Dot([gameParams.tiles[16][7], gameParams.tiles[16][2]], 0, -1, false, null, false));
 }
 
 function setLevelSolids() {

@@ -1,6 +1,6 @@
 //functions which set the level
-gameParams.pxm = 7;
-gameParams.pym = 7;
+gameParams.pxm = 8;
+gameParams.pym = 6;
 gameParams.hasCoins = true;
 
 function setLevelWalls() {
@@ -71,6 +71,7 @@ function setLevelWalls() {
 	gameParams.tiles[6][4].wall = true;
 	gameParams.tiles[6][5].wall = true;
 	gameParams.tiles[6][6].wall = true;
+	gameParams.tiles[6][7].wall = true;  
 	gameParams.tiles[6][8].wall = true;
 	gameParams.tiles[6][9].wall = true;
 	gameParams.tiles[7][0].wall = true;
@@ -79,48 +80,60 @@ function setLevelWalls() {
 	gameParams.tiles[7][3].wall = true;
 	gameParams.tiles[7][4].wall = true;
 	gameParams.tiles[7][5].wall = true;
-	gameParams.tiles[7][6].wall = true;
+    gameParams.tiles[7][6].wall = true;
+    gameParams.tiles[7][7].wall = true;
 	gameParams.tiles[7][8].wall = true;
 	gameParams.tiles[7][9].wall = true;
 	gameParams.tiles[8][0].wall = true;
-	gameParams.tiles[8][1].wall = true;
+    gameParams.tiles[8][1].wall = true;
+    gameParams.tiles[8][7].wall = true;
 	gameParams.tiles[8][8].wall = true;
 	gameParams.tiles[8][9].wall = true;
 	gameParams.tiles[9][0].wall = true;
     gameParams.tiles[9][1].wall = true;
+    gameParams.tiles[9][3].wall = true;
     gameParams.tiles[9][4].wall = true;
     gameParams.tiles[9][5].wall = true;
+    gameParams.tiles[9][6].wall = true;
+    gameParams.tiles[9][7].wall = true;
 	gameParams.tiles[9][8].wall = true;
 	gameParams.tiles[9][9].wall = true;
 	gameParams.tiles[10][0].wall = true;
 	gameParams.tiles[10][1].wall = true;
-    gameParams.tiles[10][3].wall = true;
-    gameParams.tiles[10][4].wall = true;
-    gameParams.tiles[10][5].wall = true;
+    // gameParams.tiles[10][3].wall = true;
+    // gameParams.tiles[10][4].wall = true;
+    // gameParams.tiles[10][5].wall = true;
+    gameParams.tiles[10][7].wall = true;
 	gameParams.tiles[10][8].wall = true;
 	gameParams.tiles[10][9].wall = true;
 	gameParams.tiles[11][0].wall = true;
 	gameParams.tiles[11][1].wall = true;
+    gameParams.tiles[11][2].wall = true;
     gameParams.tiles[11][3].wall = true;
     gameParams.tiles[11][4].wall = true;
     gameParams.tiles[11][5].wall = true;
-    gameParams.tiles[11][6].wall = true;
 	gameParams.tiles[11][7].wall = true;
 	gameParams.tiles[11][8].wall = true;
 	gameParams.tiles[11][9].wall = true;
 	gameParams.tiles[12][0].wall = true;
 	gameParams.tiles[12][1].wall = true;
-    gameParams.tiles[12][4].wall = true;
-    gameParams.tiles[12][5].wall = true;
+    // gameParams.tiles[12][4].wall = true;
+    // gameParams.tiles[12][5].wall = true;
+    gameParams.tiles[12][7].wall = true;
 	gameParams.tiles[12][8].wall = true;
 	gameParams.tiles[12][9].wall = true;
 	gameParams.tiles[13][0].wall = true;
-	gameParams.tiles[13][1].wall = true;
+    gameParams.tiles[13][1].wall = true;
+    gameParams.tiles[13][3].wall = true;
+    gameParams.tiles[13][4].wall = true;
+    gameParams.tiles[13][5].wall = true;
+    gameParams.tiles[13][6].wall = true;
+    gameParams.tiles[13][7].wall = true;
 	gameParams.tiles[13][8].wall = true;
 	gameParams.tiles[13][9].wall = true;
 	gameParams.tiles[14][0].wall = true;
 	gameParams.tiles[14][1].wall = true;
-	gameParams.tiles[14][2].wall = true;
+	// gameParams.tiles[14][2].wall = true;
 	gameParams.tiles[14][3].wall = true;
 	gameParams.tiles[14][4].wall = true;
 	gameParams.tiles[14][5].wall = true;
@@ -201,31 +214,44 @@ function setLevelWalls() {
 }
 
 function setLevelGoal() {
-	gameParams.tiles[6][7].goal = true;
-	gameParams.tiles[7][7].goal = true;
+    // gameParams.tiles[12][2].goal = true;
+    gameParams.tiles[14][2].goal = true;
+    // gameParams.tiles[12][3].goal = true;
+    // gameParams.tiles[13][3].goal = true;
 
-	gameParams.winArea = new Solid(gameParams.tiles[12][6], gameParams.tiles[13][7]);
+	gameParams.winArea = new Solid(gameParams.tiles[14][2], gameParams.tiles[14][2]);
 }
 
 function setLevelShortGoals(coins) {
-	var shortGoals = [];
+    var shortGoals = [];
+	// shortGoals[0] = new ShortGoal(gameParams.tiles[9][2], true, false);
+	shortGoals[0] = new ShortGoal(gameParams.tiles[10][2], true, false);
 	shortGoals[1] = new ShortGoal(gameParams.tiles[12][6], true, false);
-	shortGoals[0] = new ShortGoal(coins[0], false, true);
+	// shortGoals[2] = new ShortGoal(gameParams.tiles[11][6], true, false);
+	// shortGoals[3] = new ShortGoal(gameParams.tiles[12][4], true, false);
+	shortGoals[2] = new ShortGoal(gameParams.tiles[14][2], true, false);
+    // shortGoals[0] = new ShortGoal(coins[0], false, true);
+    // shortGoals[1] = new ShortGoal(gameParams.tiles[10][6], true, false);
+    // shortGoals[2] = new ShortGoal(coins[1], false, true);
 	shortGoals[0].setDistanceToFinish(shortGoals[1]);
+	shortGoals[1].setDistanceToFinish(shortGoals[2]);
+	// shortGoals[2].setDistanceToFinish(shortGoals[3]);
+	// shortGoals[3].setDistanceToFinish(shortGoals[4]);
+    // shortGoals[1].setDistanceToFinish(shortGoals[2]);
+    // shortGoals[1].setDistanceToFinish(shortGoals[2]);
+    // shortGoals[2].setDistanceToFinish(shortGoals[3]);
 	return shortGoals;
 }
 
 function setLevelCoins() {
 	var coins = [];
-	coins.push(new Coin(9.5 * gameParams.tileSize + gameParams.xoff, 3.5 * gameParams.tileSize + gameParams.yoff));
+    // coins.push(new Coin(10.5 * gameParams.tileSize + gameParams.xoff, 2.5 * gameParams.tileSize + gameParams.yoff));
+    // coins.push(new Coin(12.5 * gameParams.tileSize + gameParams.xoff, 6.5 * gameParams.tileSize + gameParams.yoff));
 	return coins;
 }
 
 function setLevelSafeArea() {
-    gameParams.tiles[12][6].safe = true;
-    gameParams.tiles[12][7].safe = true;
-    gameParams.tiles[13][6].safe = true;
-    gameParams.tiles[13][7].safe = true;
+    gameParams.tiles[8][6].safe = true;
 }
 
 function setLevelEdges() {
@@ -250,16 +276,15 @@ function setLevelEdges() {
 }
 
 function setLevelDots() {
-	gameParams.dots.push(new Dot([gameParams.tiles[8][2], gameParams.tiles[13][2], gameParams.tiles[13][5], gameParams.tiles[8][6]], -1, 0, true, gameParams.tiles[10][6], true));
+	// gameParams.dots.push(new Dot([gameParams.tiles[8][2], gameParams.tiles[13][2], gameParams.tiles[13][5], gameParams.tiles[8][6]], -1, 0, true, gameParams.tiles[10][6], true));
 }
 
 function setLevelSolids() {
-	gameParams.solids.push(new Solid(gameParams.tiles[5][7], gameParams.tiles[5][7]));
-	gameParams.solids.push(new Solid(gameParams.tiles[6][2], gameParams.tiles[7][6]));
-	gameParams.solids.push(new Solid(gameParams.tiles[6][8], gameParams.tiles[13][8]));
-	gameParams.solids.push(new Solid(gameParams.tiles[9][4], gameParams.tiles[12][5]));
-	gameParams.solids.push(new Solid(gameParams.tiles[10][3], gameParams.tiles[11][3]));
-	gameParams.solids.push(new Solid(gameParams.tiles[11][6], gameParams.tiles[11][7]));
-	gameParams.solids.push(new Solid(gameParams.tiles[14][2], gameParams.tiles[14][7]));
-	gameParams.solids.push(new Solid(gameParams.tiles[8][1], gameParams.tiles[13][1]));
+	gameParams.solids.push(new Solid(gameParams.tiles[7][1], gameParams.tiles[7][6]));
+	gameParams.solids.push(new Solid(gameParams.tiles[8][1], gameParams.tiles[15][1]));
+	gameParams.solids.push(new Solid(gameParams.tiles[15][2], gameParams.tiles[15][3]));
+    gameParams.solids.push(new Solid(gameParams.tiles[7][7], gameParams.tiles[14][7]));
+    gameParams.solids.push(new Solid(gameParams.tiles[9][3], gameParams.tiles[9][6]));
+    gameParams.solids.push(new Solid(gameParams.tiles[11][2], gameParams.tiles[11][5]));
+    gameParams.solids.push(new Solid(gameParams.tiles[13][3], gameParams.tiles[14][6]));
 }
