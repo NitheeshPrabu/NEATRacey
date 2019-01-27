@@ -17,11 +17,13 @@ class GameParams {
 
         //arrays
         this.tiles = [];
+        this.shortGoals = [];
         this.solids = [];
         this.dots = [];
         this.savedDots = [];
 
         this.showBest = false;
+        this.showNothing = false;
 
         this.winArea;
 
@@ -47,29 +49,29 @@ class GameParams {
         this.mrMinus;
 
         //evolution speed vars
-        this.evolutionSpeed = 1;
+        this.evolutionSpeed = 25;
         this.speedPlus;
         this.speedMinus;
 
-        this.increaseMovesBy = 5;
+        this.increaseMovesBy = 10;
         this.movesPlus;
         this.movesMinus;
 
-        this.increaseEvery = 5;
+        this.increaseEvery = 2;
         this.everyPlus;
         this.everyMinus;
 
         this.nextConnectionNo = 1000;
 
         this.firstClick = true;
-        this.showedCoin = false;
+        this.showedCoins = false;
 
         this.pxm;
         this.pym;
-        this.cxm;
-        this.cym;
-        this.hasCoin;
+        this.hasCoins;
 
-        this.distanceParam = 1;
+        this.distanceParam = 1; //1 - Manhatten, 2 - Euclidean, 3 - Minkowski
+
+        this.simDetails = [];
     }
 }

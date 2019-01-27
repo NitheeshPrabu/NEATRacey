@@ -17,27 +17,25 @@ class Player {
 		this.gen = 1;
 		this.fitness = 0;
 		this.shortGoals = [];
+		this.coins = [];
+		this.shortGoals = [];
 		this.fading = false;
 		this.human = false;
 
-		if (gameParams.hasCoin)
-			this.coin = new Coin(gameParams.cxm * gameParams.tileSize + gameParams.xoff, gameParams.cym * gameParams.tileSize + gameParams.yoff);
+		if (gameParams.hasCoins)
+			this.coins = setLevelCoins();
+
+		this.shortGoals = setLevelShortGoals(this.coins);
 
 		this.genomeInputs = gameParams.dots.length + gameParams.solids.length;
-		if (gameParams.hasCoin)
+		if (gameParams.hasCoins) {
+			for (var i = 0; i < this.coins.length; i++)
 			this.genomeInputs++;
+		}
 		this.genomeOutputs = 2;
 		this.brain = new Genome(gameParams.numberOfSteps, this.genomeInputs, this.genomeOutputs, false);
 		this.vision = [];
 		this.decision = [];
-
-		this.setLevelShortGoals();
-	}
-
-	setLevelShortGoals() {
-		this.shortGoals[0] = new ShortGoal(gameParams.tiles[6][7], true, false);
-		this.shortGoals[1] = new ShortGoal(gameParams.tiles[17][2], true, false);
-		this.shortGoals[0].setDistanceToFinish(this.shortGoals[1]);
 	}
 
 	show() {
@@ -49,8 +47,11 @@ class Player {
 		strokeWeight(4);
 		rect(this.pos.x, this.pos.y, this.size, this.size);
 		stroke(0);
-		if (gameParams.hasCoin)
-			this.coin.show();
+		if (gameParams.hasCoins) {
+			for (var i = 0; i < this.coins.length; i++)
+				this.coins[i].show();
+			gameParams.showedCoins = true;
+		}
 	}
 
 	move() {
@@ -79,8 +80,10 @@ class Player {
 
 	//checks if the player
 	checkCollisions() {
-		if (gameParams.hasCoin)
-			this.coin.collides(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size));
+		if (gameParams.hasCoins) {
+			for (var i = 0; i < this.coins.length; i++)
+				this.coins[i].collides(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size));
+		}
 		for (var i = 0; i < gameParams.dots.length; i++) {
 			if (gameParams.dots[i].collides(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size))) {
 				this.fading = true;
@@ -90,8 +93,19 @@ class Player {
 			}
 		}
 		if (gameParams.winArea.collision(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size))) {
-			if (gameParams.hasCoin && this.coin.taken || !gameParams.hasCoin)
+			if (!gameParams.hasCoins)
 				this.reachedGoal = true;
+			else if (gameParams.hasCoins) {
+				var flag = false;
+				for (var i = 0; i < this.coins.length; i++) {
+					if (!this.coins[i].taken) {
+						flag = true;
+						break;
+					}
+				}
+				if (!flag)
+					this.reachedGoal = true;
+			}
 		}
 		for (var i = 0; i < this.shortGoals.length; i++) {
 			this.shortGoals[i].collision(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size));
@@ -134,8 +148,11 @@ class Player {
 		}
 		// console.log(estimatedDistance);
 		this.fitness *= this.fitness;
-		if (gameParams.hasCoin && this.coin.taken) {
-			this.fitness *= 1.2;
+		if (gameParams.hasCoins) {
+			for (var i = 0; i < this.coins.length; i++) {
+				if (this.coins[i].taken)
+					this.fitness *= 1.2;
+			}
 		}
 	}
 
@@ -162,8 +179,10 @@ class Player {
 			for (var i = gameParams.dots.length; i < gameParams.dots.length + gameParams.solids.length; i++) {
 				this.vision[i] = gameParams.solids[i - gameParams.dots.length].getDistance(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size), temp);
 			}
-			if (gameParams.hasCoin)
-				this.vision[this.genomeInputs-1] = this.coin.getDistance(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size))
+			if (gameParams.hasCoins) {
+				for (var i = 0; i < this.coins.length; i++) 
+					this.vision[this.vision.length - 1] = this.coins[i].getDistance(this.pos, createVector(this.pos.x + this.size, this.pos.y + this.size))
+			}
 		}
 	}
 
@@ -180,17 +199,17 @@ class Player {
 		}
 		var velVec;
 		if (this.decision[0] == 1) {
-			velVec = createVector(0,-1);
+			velVec = createVector(0, -1);
 			this.brain.directions.push(velVec);
 		} else {
-			velVec = createVector(0,1);
+			velVec = createVector(0, 1);
 			this.brain.directions.push(velVec);
 		}
 		if (this.decision[1] == 1) {
-			velVec = createVector(-1,0);
+			velVec = createVector(-1, 0);
 			this.brain.directions.push(velVec);
 		} else {
-			velVec = createVector(1,0);
+			velVec = createVector(1, 0);
 			this.brain.directions.push(velVec);
 		}
 	}

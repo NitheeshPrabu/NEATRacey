@@ -230,9 +230,10 @@ class Genome {
 
 		var randomConnection = floor(random(this.genes.length));
 
-		while (this.genes[randomConnection].fromNode == this.nodes[this.biasNode] && this.genes.length != 1) { //dont disconnect bias
-			randomConnection = floor(random(this.genes.length));
-		}
+		// while (this.genes[randomConnection].fromNode == this.nodes[this.biasNode] && this.genes.length != 1) { //dont disconnect bias
+		// 	// console.log("in addNode", randomConnection);
+		// 	randomConnection = floor(random(this.genes.length));
+		// }
 
 		this.genes[randomConnection].enabled = false; //disable it
 
@@ -285,6 +286,7 @@ class Genome {
 		while (this.nodes[randomNode1].layer == this.nodes[randomNode2].layer
 			|| this.nodes[randomNode1].isConnectedTo(this.nodes[randomNode2])) { //while the random nodes are no good
 			//get new ones
+			// console.log("in addConnection", randomNode1, randomNode2)
 			randomNode1 = floor(random(this.nodes.length));
 			randomNode2 = floor(random(this.nodes.length));
 		}
