@@ -49,15 +49,15 @@ class GameParams {
         this.mrMinus;
 
         //evolution speed vars
-        this.evolutionSpeed = 25;
+        this.evolutionSpeed = 6;
         this.speedPlus;
         this.speedMinus;
 
-        this.increaseMovesBy = 10;
+        this.increaseMovesBy = 5;
         this.movesPlus;
         this.movesMinus;
 
-        this.increaseEvery = 2;
+        this.increaseEvery = 5;
         this.everyPlus;
         this.everyMinus;
 
