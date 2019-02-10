@@ -7,6 +7,8 @@ var speedPara;
 var movesPara;
 var everyPara;
 var movesPara;
+var resultPara;
+
 
 function setup() {
 	var canvas = createCanvas(1440, 810);
@@ -93,6 +95,19 @@ function draw() {
 			}
 		} else { //if training normaly
 			if (gameParams.testPopulation.allPlayersDead()) {
+				if (gameParams.testPopulation.solutionFound && gameParams.currentSimDetails === null) {
+					gameParams.currentSimDetails = {};
+					gameParams.currentSimDetails["converges"] = gameParams.testPopulation.gen;
+					gameParams.currentSimDetails["firstSteps"] = gameParams.testPopulation.minStep;
+					gameParams.currentSimDetails["goalCount"] = gameParams.testPopulation.getGoalReachCount();
+				}
+				if (gameParams.testPopulation.gen == gameParams.simGenLimit) {
+					gameParams.currentSimDetails["finalGen"] = gameParams.testPopulation.gen;
+					gameParams.currentSimDetails["finalSteps"] = gameParams.testPopulation.minStep;
+					gameParams.currentSimDetails["finalGoalCount"] = gameParams.testPopulation.getGoalReachCount();
+					storeResults();
+				}
+
 				//genetic algorithm
 				gameParams.testPopulation.calculateFitness();
 				gameParams.testPopulation.naturalSelection();
@@ -202,18 +217,20 @@ function drawGameDetails() {
 		text("Generation: " + gameParams.testPopulation.gen, 200, 90);
 		if (gameParams.testPopulation.solutionFound) {
 			text("Wins in " + gameParams.testPopulation.minStep + " moves", 700, 90);
-			if (gameParams.simDetails.length != gameParams.testPopulation.gen)
-				gameParams.simDetails.push({ "Gen": gameParams.testPopulation.gen, "Wins": gameParams.testPopulation.minStep })
 		} else {
 			text("Number of moves: " + gameParams.testPopulation.players[0].brain.directions.length, 700, 90);
-			if (gameParams.simDetails.length != gameParams.testPopulation.gen)
-				gameParams.simDetails.push({ "Gen": gameParams.testPopulation.gen, "Steps": gameParams.testPopulation.players[0].brain.directions.length })
 		}
-
 	} else {
 		text("Use the arrow keys or WASD to move.", 640, 90);
 		text("Avoid dots. Collect the coin. Reach the Goal.", 640, 130);
 	}
+}
+
+function storeResults() {
+	var count = window.localStorage.length;
+	count++;
+	window.localStorage.setItem("run"+count,JSON.stringify(gameParams.currentSimDetails));
+	location.reload();
 }
 
 function keyPressed() {
@@ -270,7 +287,7 @@ function keyPressed() {
 				gameParams.showNothing = !gameParams.showNothing;
 				break;
 			case 'L': //show saved sim details
-				console.log(gameParams.simDetails)
+				console.log(gameParams.currentSimDetails)
 				break;
 		}
 	}
@@ -384,6 +401,13 @@ function drawSimDetails() {
 	gameParams.everyPlus.mousePressed(plusEvery);
 	gameParams.everyMinus.mousePressed(minusEvery);
 
+	createElement("h4", "Simulation Results");
+	resultPara = createDiv("Generations collected: " + window.localStorage.length);
+	var resultButton = createButton("Print Results");
+	var downloadButton = createButton("Download Results");
+
+	resultButton.mousePressed(getResults);
+	downloadButton.mousePressed(downloadCSV);
 }
 
 function minusPopSize() {
@@ -463,35 +487,61 @@ function plusEvery() {
 	}
 }
 
+function getResults() {
+	for (var i = 0; i < window.localStorage.length; i++) {
+		resultPara = createDiv(window.localStorage.getItem(window.localStorage.key(i)));
+	}
+}
+
+function downloadCSV() {
+	let data = [];
+	for (var i = 0; i < window.localStorage.length; i++) {
+		let temp = JSON.parse(window.localStorage.getItem(window.localStorage.key(i)));
+		data.push(temp);
+	}
+    var csv = Papa.unparse(data);
+    var csvData = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+    var csvURL =  null;
+    if (navigator.msSaveBlob) {
+        csvURL = navigator.msSaveBlob(csvData, 'download.csv');
+    } else {
+        csvURL = window.URL.createObjectURL(csvData);
+    }
+    var tempLink = document.createElement('a');
+    tempLink.href = csvURL;
+    tempLink.setAttribute('download', 'level.csv');
+    tempLink.click();
+}
+
 //--------------------------------------------------------------------------------------------------------------------------------
 //this just prints the coordinates of the tile which is clicked, usefull for level building
-function mousePressed() {
+// function mousePressed() {
 
-	var x = floor((mouseX - gameParams.xoff) / gameParams.tileSize);
-	var y = floor((mouseY - gameParams.yoff) / gameParams.tileSize);
+// 	var x = floor((mouseX - gameParams.xoff) / gameParams.tileSize);
+// 	var y = floor((mouseY - gameParams.yoff) / gameParams.tileSize);
 
-	//   gameParams.tiles[x][y].wall = !gameParams.tiles[x][y].wall;
-	// gameParams.tiles[x][y].safe = !gameParams.tiles[x][y].safe;
-	// gameParams.tiles[x][y].safe = !gameParams.tiles[x][y].safe;
+// 	//   gameParams.tiles[x][y].wall = !gameParams.tiles[x][y].wall;
+// 	// gameParams.tiles[x][y].safe = !gameParams.tiles[x][y].safe;
+// 	// gameParams.tiles[x][y].safe = !gameParams.tiles[x][y].safe;
 
-	//   define solids
-	//   if(gameParams.firstClick){
-	//     print("gameParams.solids.push(new Solid(gameParams.tiles[" + x + "]["+ y + "],");
-	//   }else{
-	//     print("gameParams.tiles[" + x + "]["+ y + "]));");
-	//   }
-	//   gameParams.firstClick = !gameParams.firstClick;
+// 	//   define solids
+// 	//   if(gameParams.firstClick){
+// 	//     print("gameParams.solids.push(new Solid(gameParams.tiles[" + x + "]["+ y + "],");
+// 	//   }else{
+// 	//     print("gameParams.tiles[" + x + "]["+ y + "]));");
+// 	//   }
+// 	//   gameParams.firstClick = !gameParams.firstClick;
 
-	  print("gameParams.tiles[" + x + "]["+ y + "],");
+// 	  print("gameParams.tiles[" + x + "]["+ y + "],");
 
-	// define dots
-	// if(gameParams.firstClick){
-	//   print("gameParams.dots.push(new Dot(gameParams.tiles[" + x + "]["+ y + "],");
-	// }else{
-	//   print("gameParams.tiles[" + x + "]["+ y + "], 0, 1));");
-	// }
-	//
-	// gameParams.firstClick = !gameParams.firstClick;
-	// gameParams.dots.push(new Dot(gameParams.tiles[15][6], gameParams.tiles[6][6], -1));
+// 	// define dots
+// 	// if(gameParams.firstClick){
+// 	//   print("gameParams.dots.push(new Dot(gameParams.tiles[" + x + "]["+ y + "],");
+// 	// }else{
+// 	//   print("gameParams.tiles[" + x + "]["+ y + "], 0, 1));");
+// 	// }
+// 	//
+// 	// gameParams.firstClick = !gameParams.firstClick;
+// 	// gameParams.dots.push(new Dot(gameParams.tiles[15][6], gameParams.tiles[6][6], -1));
 
-}
+// }

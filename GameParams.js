@@ -23,7 +23,7 @@ class GameParams {
         this.savedDots = [];
 
         this.showBest = false;
-        this.showNothing = false;
+        this.showNothing = true;
 
         this.winArea;
 
@@ -49,15 +49,15 @@ class GameParams {
         this.mrMinus;
 
         //evolution speed vars
-        this.evolutionSpeed = 25;
+        this.evolutionSpeed = 150;
         this.speedPlus;
         this.speedMinus;
 
-        this.increaseMovesBy = 10;
+        this.increaseMovesBy = 5;
         this.movesPlus;
         this.movesMinus;
 
-        this.increaseEvery = 2;
+        this.increaseEvery = 5;
         this.everyPlus;
         this.everyMinus;
 
@@ -72,6 +72,8 @@ class GameParams {
 
         this.distanceParam = 1; //1 - Manhatten, 2 - Euclidean, 3 - Minkowski
 
-        this.simDetails = [];
+        this.playerThreshold = 25;
+        this.currentSimDetails = null;
+        this.simGenLimit = 100;
     }
 }

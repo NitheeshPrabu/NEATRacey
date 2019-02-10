@@ -16,6 +16,8 @@ class Population {
 			this.players[i] = new Player();
 			this.players[i].brain.generateNetwork();
 		}
+
+		this.sortedPool = []; //for pushing top n players into next gen
 	}
 
 	//------------------------------------------------------------------------------------------------------------------------------
@@ -69,10 +71,15 @@ class Population {
 		this.setBestPlayer();
 		this.calculateFitnessSum();
 
-		//the champion lives on
-		newPlayers[0] = this.players[this.bestPlayer].getChild();
-		newPlayers[0].isBest = true;
-		for (var i = 1; i < gameParams.populationSize; i++) {
+		//the champions lives on
+		for (var i = 0; i < gameParams.playerThreshold; i++) {
+			newPlayers[i] = this.sortedPool[i].getChild();
+			newPlayers[i].isBest = true;
+		}
+		// newPlayers[0] = this.players[this.bestPlayer].getChild();
+		// newPlayers[0].isBest = true;
+		
+		for (var i = newPlayers.length; i < gameParams.populationSize; i++) {
 			//select parent based on fitness
 			var parent = this.selectParent();
 
@@ -131,8 +138,19 @@ class Population {
 	//---------------------------------------------------------------------------------------------------------------------------------------------
 	//finds the player with the highest fitness and sets it as the best player
 	setBestPlayer() {
-		var max = 0;
+		var max = -1;
 		var maxIndex = 0;
+
+		this.sortedPool = [];
+		for (var i = 0; i < this.players.length; i++) {
+			this.sortedPool[i] = this.players[i].getChild();
+			this.sortedPool[i].fitness = this.players[i].fitness;
+		}
+
+		this.sortedPool.sort(function(a,b) {
+			return b.fitness - a.fitness;
+		});
+
 		for (var i = 0; i < this.players.length; i++) {
 			if (this.players[i].fitness > max) {
 				max = this.players[i].fitness;
@@ -160,5 +178,14 @@ class Population {
 				this.players[i].brain.increaseMoves();
 			}
 		}
+	}
+
+	getGoalReachCount() {
+		var count = 0;
+		for (var i = 0; i < this.players.length; i++) {
+			if (this.players[i].reachedGoal)
+				count++;
+		}
+		return count;
 	}
 }
