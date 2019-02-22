@@ -100,9 +100,6 @@ function setLevelWalls() {
 	gameParams.tiles[9][9].wall = true;
 	gameParams.tiles[10][0].wall = true;
 	gameParams.tiles[10][1].wall = true;
-    // gameParams.tiles[10][3].wall = true;
-    // gameParams.tiles[10][4].wall = true;
-    // gameParams.tiles[10][5].wall = true;
     gameParams.tiles[10][7].wall = true;
 	gameParams.tiles[10][8].wall = true;
 	gameParams.tiles[10][9].wall = true;
@@ -117,8 +114,6 @@ function setLevelWalls() {
 	gameParams.tiles[11][9].wall = true;
 	gameParams.tiles[12][0].wall = true;
 	gameParams.tiles[12][1].wall = true;
-    // gameParams.tiles[12][4].wall = true;
-    // gameParams.tiles[12][5].wall = true;
     gameParams.tiles[12][7].wall = true;
 	gameParams.tiles[12][8].wall = true;
 	gameParams.tiles[12][9].wall = true;
@@ -133,7 +128,6 @@ function setLevelWalls() {
 	gameParams.tiles[13][9].wall = true;
 	gameParams.tiles[14][0].wall = true;
 	gameParams.tiles[14][1].wall = true;
-	// gameParams.tiles[14][2].wall = true;
 	gameParams.tiles[14][3].wall = true;
 	gameParams.tiles[14][4].wall = true;
 	gameParams.tiles[14][5].wall = true;
@@ -214,39 +208,23 @@ function setLevelWalls() {
 }
 
 function setLevelGoal() {
-    // gameParams.tiles[12][2].goal = true;
-    gameParams.tiles[14][2].goal = true;
-    // gameParams.tiles[12][3].goal = true;
-    // gameParams.tiles[13][3].goal = true;
-
+	gameParams.tiles[14][2].goal = true;
+	
 	gameParams.winArea = new Solid(gameParams.tiles[14][2], gameParams.tiles[14][2]);
 }
 
 function setLevelShortGoals(coins) {
     var shortGoals = [];
-	// shortGoals[0] = new ShortGoal(gameParams.tiles[9][2], true, false);
 	shortGoals[0] = new ShortGoal(gameParams.tiles[10][2], true, false);
 	shortGoals[1] = new ShortGoal(gameParams.tiles[12][6], true, false);
-	// shortGoals[2] = new ShortGoal(gameParams.tiles[11][6], true, false);
-	// shortGoals[3] = new ShortGoal(gameParams.tiles[12][4], true, false);
 	shortGoals[2] = new ShortGoal(gameParams.tiles[14][2], true, false);
-    // shortGoals[0] = new ShortGoal(coins[0], false, true);
-    // shortGoals[1] = new ShortGoal(gameParams.tiles[10][6], true, false);
-    // shortGoals[2] = new ShortGoal(coins[1], false, true);
 	shortGoals[0].setDistanceToFinish(shortGoals[1]);
 	shortGoals[1].setDistanceToFinish(shortGoals[2]);
-	// shortGoals[2].setDistanceToFinish(shortGoals[3]);
-	// shortGoals[3].setDistanceToFinish(shortGoals[4]);
-    // shortGoals[1].setDistanceToFinish(shortGoals[2]);
-    // shortGoals[1].setDistanceToFinish(shortGoals[2]);
-    // shortGoals[2].setDistanceToFinish(shortGoals[3]);
 	return shortGoals;
 }
 
 function setLevelCoins() {
 	var coins = [];
-    // coins.push(new Coin(10.5 * gameParams.tileSize + gameParams.xoff, 2.5 * gameParams.tileSize + gameParams.yoff));
-    // coins.push(new Coin(12.5 * gameParams.tileSize + gameParams.xoff, 6.5 * gameParams.tileSize + gameParams.yoff));
 	return coins;
 }
 

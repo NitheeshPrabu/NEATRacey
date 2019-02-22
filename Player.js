@@ -150,8 +150,8 @@ class Player {
 		this.fitness *= this.fitness;
 		if (gameParams.hasCoins) {
 			for (var i = 0; i < this.coins.length; i++) {
-				if (this.coins[i].taken)
-					this.fitness *= 1.2;
+				if (!this.coins[i].taken)
+					this.fitness /= 100;
 			}
 		}
 	}

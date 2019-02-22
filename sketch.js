@@ -9,7 +9,6 @@ var everyPara;
 var movesPara;
 var resultPara;
 
-
 function setup() {
 	var canvas = createCanvas(1440, 810);
 	drawSimDetails();
@@ -102,6 +101,18 @@ function draw() {
 					gameParams.currentSimDetails["goalCount"] = gameParams.testPopulation.getGoalReachCount();
 				}
 				if (gameParams.testPopulation.gen == gameParams.simGenLimit) {
+					if (gameParams.currentSimDetails === null) {
+						gameParams.currentSimDetails = {};
+						if (gameParams.testPopulation.solutionFound) {
+							gameParams.currentSimDetails["converges"] = gameParams.testPopulation.gen;
+							gameParams.currentSimDetails["firstSteps"] = gameParams.testPopulation.minStep;
+							gameParams.currentSimDetails["goalCount"] = gameParams.testPopulation.getGoalReachCount();
+						} else {
+							gameParams.currentSimDetails["converges"] = null;
+							gameParams.currentSimDetails["firstSteps"] = null;
+							gameParams.currentSimDetails["goalCount"] = null;
+						}
+					}
 					gameParams.currentSimDetails["finalGen"] = gameParams.testPopulation.gen;
 					gameParams.currentSimDetails["finalSteps"] = gameParams.testPopulation.minStep;
 					gameParams.currentSimDetails["finalGoalCount"] = gameParams.testPopulation.getGoalReachCount();
@@ -402,7 +413,12 @@ function drawSimDetails() {
 	gameParams.everyMinus.mousePressed(minusEvery);
 
 	createElement("h4", "Simulation Results");
-	resultPara = createDiv("Generations collected: " + window.localStorage.length);
+	let count = 0;
+	for (var i = 1; i <= window.localStorage.length; i++) {
+		if (JSON.parse(window.localStorage.getItem("run"+i)).converges != null)
+			count++;
+	}
+	resultPara = createDiv("Converged generations collected: " + count + ", Total collected: " + window.localStorage.length);
 	var resultButton = createButton("Print Results");
 	var downloadButton = createButton("Download Results");
 
@@ -543,5 +559,4 @@ function downloadCSV() {
 // 	//
 // 	// gameParams.firstClick = !gameParams.firstClick;
 // 	// gameParams.dots.push(new Dot(gameParams.tiles[15][6], gameParams.tiles[6][6], -1));
-
 // }
