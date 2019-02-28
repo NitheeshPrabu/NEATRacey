@@ -13,8 +13,8 @@ average_converges,average_first_step,average_goal_count,average_final_steps,aver
 42,39,291,39,397,0.0,0.0,50,3,euclidean
 33,38,182,30,256,26.73,142.65,1,4,euclidean
 33,38,169,30,264,27.03,197.2,5,4,euclidean
-24,27,118,22,172,48.11,141.25,25,4,euclidean
-23,28,124,23,215,41.3,218.46,50,4,euclidean
+38,43,187,35,273,17.91,142.57,25,4,euclidean
+33,40,176,32,305,16.92,244.33,50,4,euclidean
 62,65,174,57,299,0.0,147.39,1,1,manhatten
 59,63,220,54,318,0.0,106.1,5,1,manhatten
 55,61,182,53,316,0.0,160.88,25,1,manhatten
@@ -27,7 +27,7 @@ average_converges,average_first_step,average_goal_count,average_final_steps,aver
 40,39,361,39,399,0.0,0.0,5,3,manhatten
 41,39,314,39,397,0.0,0.0,25,3,manhatten
 40,39,306,39,397,0.0,0.0,50,3,manhatten
-27,31,154,25,210,37.21,117.26,1,4,manhatten
-31,35,172,29,225,34.34,88.01,5,4,manhatten
-26,30,141,24,228,38.71,205.67,25,4,manhatten
-19,22,102,18,140,56.25,112.87,50,4,manhatten
+19,22,108,18,148,55.74,112.23,1,4,manhatten
+25,28,139,23,181,47.15,89.95,5,4,manhatten
+20,24,112,19,181,51.28,213.89,25,4,manhatten
+19,23,106,18,145,54.84,133.3,50,4,manhatten
