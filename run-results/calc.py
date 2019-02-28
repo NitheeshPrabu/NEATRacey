@@ -42,7 +42,7 @@ for metric in metrics:
                     else:
                         for i in range(0, 6):
                             running_sums[i] += row[i]
-                averages = [val/total_count for val in running_sums]
+                averages = [val/(total_count-total_null_count) for val in running_sums]
                 # print(averages)
                 averages = averages[0:3] + averages[4:]
                 # print(averages)
