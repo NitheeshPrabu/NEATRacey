@@ -173,7 +173,7 @@ class Population {
 	}
 
 	increaseMoves() {
-		if (this.players[0].brain.directions.length < 140 && !this.solutionFound) {
+		if (this.players[0].brain.directions.length < 120 && !this.solutionFound) {
 			for (var i = 0; i < this.players.length; i++) {
 				this.players[i].brain.increaseMoves();
 			}

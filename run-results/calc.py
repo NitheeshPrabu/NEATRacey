@@ -2,7 +2,7 @@ import os
 import csv
 
 metrics = ['euclidean', 'manhatten']
-levels = [1, 2, 3, 4]
+levels = [1, 2, 3, 4, 5]
 best_sizes = [1, 5, 25, 50]
 
 data = {0: ['converges', 'firstSteps', 'goalCount',

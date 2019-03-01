@@ -49,15 +49,15 @@ class GameParams {
 		this.mrMinus;
 
 		//evolution speed vars
-		this.evolutionSpeed = 150;
+		this.evolutionSpeed = 1;
 		this.speedPlus;
 		this.speedMinus;
 
-		this.increaseMovesBy = 10;
+		this.increaseMovesBy = 5;
 		this.movesPlus;
 		this.movesMinus;
 
-		this.increaseEvery = 2;
+		this.increaseEvery = 5;
 		this.everyPlus;
 		this.everyMinus;
 
@@ -72,7 +72,7 @@ class GameParams {
 
 		this.distanceParam = 2; //1 - Manhatten, 2 - Euclidean, 3 - Minkowski
 
-		this.playerThreshold = 5;
+		this.playerThreshold = 50;
 		this.currentSimDetails = null;
 		this.simGenLimit = 100;
 	}
